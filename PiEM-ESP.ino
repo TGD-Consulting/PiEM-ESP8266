@@ -22,7 +22,7 @@
 
 #define WLAN_SSID               "SSID des WLAN"          // change to your WiFi SSID 
 #define WLAN_PASSPHRASE         "DAS GEHEIME PASSWORT"   // change to your passphrase
-#define NTP_SERVER	          	"192.168.9.28"           // set your NTP-Server here, eg. "us.pool.ntp.org"
+#define NTP_SERVER              "192.168.9.28"           // set your NTP-Server here, eg. "us.pool.ntp.org"
 #define PIEM_HOST               "192.168.9.25"           // PiEM-It! Webserver
 #define PIEM_PORT               8080                     // Port des Webservers
 #define ZAEHLER_ID              "123456789"              // eindeutige ID des Z‰hlersensors
