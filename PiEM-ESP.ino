@@ -78,10 +78,13 @@ void loop() {
         yield();                            // Do (almost) nothing -- yield to allow ESP8266 background functions
 
     // Zählimpuls erkannt => Signalisierung an PIEM-Server
-    String DateTimeString = String(now.day(),DEC) + "-" + String(now.month(),DEC) + "-" + String(now.year(),DEC);
-    DateTimeString = DateTimeString + "/" + String(now.hour(),DEC) + ":" + String(now.minute(),DEC) + ":" + String(now.second(),DEC);
+    time_t t = now(); // Store the current time in time 
+    String DateTimeString = String(day(t),DEC) + "-" + String(month(t),DEC) + "-" + String(year(t),DEC);
+    DateTimeString = DateTimeString + "/" + String(hour(t),DEC) + ":" + String(minute(t),DEC) + ":" + String(second(t),DEC);
 
 #ifdef SERDEBUG
+    Serial.print("impulse detected @ ");
+    Serial.println(DateTimeString);
     Serial.print("connecting to ");
     Serial.println(PIEM_HOST);
 #endif
