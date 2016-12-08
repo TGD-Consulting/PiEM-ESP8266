@@ -22,8 +22,8 @@
 
 #define WLAN_SSID               "SSID des WLAN"          // change to your WiFi SSID 
 #define WLAN_PASSPHRASE         "DAS GEHEIME PASSWORT"   // change to your passphrase
-#define NTP_SERVER              "192.168.9.28"           // set your NTP-Server here, eg. "us.pool.ntp.org"
-#define PIEM_HOST               "192.168.9.25"           // PiEM-It! Webserver
+#define NTP_SERVER              "192.168.0.1"            // set your NTP-Server here, eg. "us.pool.ntp.org"
+#define PIEM_HOST               "192.168.0.25"           // PiEM-It! Webserver
 #define PIEM_PORT               8080                     // Port des Webservers
 #define ZAEHLER_ID              "123456789"              // eindeutige ID des Z‰hlersensors
 #define TOKEN                   "000000453c67f0"         // Verbindungstoken (Seriennummer des RPi)
@@ -78,8 +78,8 @@ void loop() {
         yield();                            // Do (almost) nothing -- yield to allow ESP8266 background functions
 
     // Zählimpuls erkannt => Signalisierung an PIEM-Server
-    string DateTimeString = String(now.day(),DEC) + "-" + String(now.month(),DEC) + "-" + String(now.year(),DEC);
-    DateTimeString= DateTimeString + "/" + String(now.hour(),DEC) + ":"+String(now.minute(),DEC) + ":"+String(now.second(),DEC);
+    String DateTimeString = String(now.day(),DEC) + "-" + String(now.month(),DEC) + "-" + String(now.year(),DEC);
+    DateTimeString = DateTimeString + "/" + String(now.hour(),DEC) + ":" + String(now.minute(),DEC) + ":" + String(now.second(),DEC);
 
 #ifdef SERDEBUG
     Serial.print("connecting to ");
@@ -88,7 +88,7 @@ void loop() {
 
     // Use WiFiClient class to create TCP connections
     WiFiClient client;
-    if (!client.connect(PIEM_HOST, PIEM_Port)) {
+    if (!client.connect(PIEM_HOST, PIEM_PORT)) {
 #ifdef SERDEBUG
        Serial.println("connection failed");
 #endif
@@ -97,10 +97,10 @@ void loop() {
 
     // We now create a URI for the request
     String url = "/cgi-bin/import.html?id=";
-    url += Zaehler_ID;
+    url += ZAEHLER_ID;
     url += "&token=";
     url += TOKEN;
-    if (timeStatus() != timeNotSet){ // Falls Zeit synchron zum NTP-Server, Zeitpunkt ¸bermitteln
+    if (timeStatus() != timeNotSet){ // Falls Zeit synchron zum NTP-Server, Zeitpunkt übermitteln
        url += "&time=";
        url += DateTimeString;        // im REBOL Time-Format
     }
