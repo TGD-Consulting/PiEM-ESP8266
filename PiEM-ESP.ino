@@ -73,12 +73,12 @@ void setup() {
 }
 
 void loop() {
-    // Wait for Z‰hlimpuls
+    // Wait for Zählimpuls
     while (digitalRead(GPIO_INPUT) == HIGH) // While GPIO_INPUT pin is HIGH (not activated)
         yield();                            // Do (almost) nothing -- yield to allow ESP8266 background functions
 
     // Zählimpuls erkannt => Signalisierung an PIEM-Server
-    time_t t = now(); // Store the current time in time 
+    time_t t = now();                      // Store the current time in time variable t 
     String DateTimeString = String(day(t),DEC) + "-" + String(month(t),DEC) + "-" + String(year(t),DEC);
     DateTimeString = DateTimeString + "/" + String(hour(t),DEC) + ":" + String(minute(t),DEC) + ":" + String(second(t),DEC);
 
@@ -117,7 +117,7 @@ void loop() {
     client.print(String("GET ") + url + " HTTP/1.1\r\n" +
                 "Host: " + PIEM_HOST + "\r\n" +
                 "Connection: close\r\n\r\n");
-    delay(100); // Wartezeit bevor erneut auf neuen Z‰hlimpuls gewartet wird
+    delay(100); // Wartezeit bevor erneut auf neuen Zählimpuls gewartet wird
 
 }
 
