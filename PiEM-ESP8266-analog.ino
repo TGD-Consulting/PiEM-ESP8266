@@ -1,11 +1,11 @@
 /****************************************************************************
  * PiEM-ESP8266 analog Modul                                                *
  * =========================                                                *
- * Dieser Sketch für den ESP8266 überträgt analoge Messwerte an PiEM-It!    *
- * und benötigt folgende Libraries:                                         *
+ * Dieser Sketch fÃ¼r den ESP8266 Ã¼bertrÃ¤gt analoge Messwerte an PiEM-It!    *
+ * und benÃ¶tigt folgende Libraries:                                         *
  *  WiFi, NTP, Time                                                         *
  *                                                                          *
- * Die Übertragung der analogen Daten erfolgt per HTTP-Get Request an das   *
+ * Die Ãœbertragung der analogen Daten erfolgt per HTTP-Get Request an das   *
  * Webserver Modul von PiEM-It!                                             *
  *                                                                          *
  * Homepage: http://piem.TGD-Consulting.de                                  *
@@ -25,10 +25,10 @@
 #define NTP_SERVER              "192.168.0.1"            // set your local NTP-Server here, or eg. "ptbtime2.ptb.de"
 #define PIEM_HOST               "192.168.0.25"           // PiEM-It! Webserver
 #define PIEM_PORT               8080                     // Port des Webservers
-#define ZAEHLER_ID              "123456789"              // eindeutige ID des Zählersensors
+#define ZAEHLER_ID              "123456789"              // eindeutige ID des ZÃ¤hlersensors
 #define TOKEN                   "000000453c67f0"         // Verbindungstoken (Seriennummer des RPi)
 #define PST +1           // MESZ
-#define SERDEBUG 1       // Debug-Infos ¸ber Serielle Schnittstelle senden, bei 0 Debugging OFF  
+#define SERDEBUG 1       // Debug-Infos Â¸ber Serielle Schnittstelle senden, bei 0 Debugging OFF  
 #define GPIO_INPUT A0    // AO, analoger Eingang wird als Datenquelle verwendet
 
 // include requiered library header
@@ -68,18 +68,18 @@ void setup() {
 
    pinMode(GPIO_INPUT, INPUT); 
 
-   delay(1000);  // nach dem Start 1 Sekunden Zeit, für NTP-Synchronisation
+   delay(1000);  // nach dem Start 1 Sekunden Zeit, fÃ¼r NTP-Synchronisation
 
    int old = analogRead(GPIO_INPUT);
 }
 
 void loop() {
-    // Wait for Zählimpuls
-    while (int val = analogRead(GPIO_INPUT) == old) // While analoges Signal GPIO_INPUT ist unverändert
+    // Wait for ZÃ¤hlimpuls
+    while (int val = analogRead(GPIO_INPUT) == old) // While analoges Signal GPIO_INPUT ist unverÃ¤ndert
         yield();                                    // Do (almost) nothing -- yield to allow ESP8266 background functions
 
-    // verändertes analoges Signal erkannt => Signalisierung an PIEM-Server
-    old = val
+    // verÃ¤ndertes analoges Signal erkannt => Signalisierung an PIEM-Server
+    old = val;
     time_t t = now();                      // Store the current time in time variable t 
     String DateTimeString = String(day(t),DEC) + "-" + String(month(t),DEC) + "-" + String(year(t),DEC);
     DateTimeString = DateTimeString + "/" + String(hour(t),DEC) + ":" + String(minute(t),DEC) + ":" + String(second(t),DEC);
@@ -107,7 +107,7 @@ void loop() {
     url += TOKEN;
     url += "&data=";
     url += val;
-    if (timeStatus() != timeNotSet){ // Falls Zeit synchron zum NTP-Server, Zeitpunkt übermitteln
+    if (timeStatus() != timeNotSet){ // Falls Zeit synchron zum NTP-Server, Zeitpunkt Ã¼bermitteln
        url += "&time=";
        url += DateTimeString;        // im REBOL Time-Format
     }
