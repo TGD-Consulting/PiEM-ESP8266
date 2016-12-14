@@ -10,8 +10,8 @@
  *                                                                          *
  * Homepage: http://piem.TGD-Consulting.de                                  *
  *                                                                          *
- * Version 0.1.0                                                            *
- * Datum 13.12.2016                                                         *
+ * Version 0.1.1                                                            *
+ * Datum 14.12.2016                                                         *
  *                                                                          *
  * (C) 2016 TGD-Consulting , Author: Dirk Weyand                            *
  ****************************************************************************/ 
@@ -149,6 +149,9 @@ bool startWiFi(void)
    Serial.println(WLAN_PASSPHRASE);
 #endif
 
+   WiFi.persistent(false); // Reduces flash access, memory wearing
+   WiFi.mode(WIFI_STA);    // Explicitly set the ESP8266 to be a WiFi-client
+   
    if (WiFi.begin(WLAN_SSID, WLAN_PASSPHRASE) != WL_CONNECTED) {
       for (i=0;i<10;i++){
         if (WiFi.status() == WL_CONNECTED) return true;
