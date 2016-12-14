@@ -10,8 +10,8 @@
  *                                                                          *
  * Homepage: http://piem.TGD-Consulting.de                                  *
  *                                                                          *
- * Version 0.1.0                                                            *
- * Datum 07.12.2016                                                         *
+ * Version 0.1.1                                                            *
+ * Datum 14.12.2016                                                         *
  *                                                                          *
  * (C) 2016 TGD-Consulting , Author: Dirk Weyand                            *
  ****************************************************************************/ 
@@ -22,10 +22,10 @@
 
 #define WLAN_SSID               "SSID des WLAN"          // change to your WiFi SSID 
 #define WLAN_PASSPHRASE         "DAS GEHEIME PASSWORT"   // change to your passphrase
-#define NTP_SERVER              "192.168.0.1"            // set your NTP-Server here, eg. "us.pool.ntp.org"
+#define NTP_SERVER              "192.168.0.1"            // set your local NTP-Server here, or eg. "ptbtime2.ptb.de"
 #define PIEM_HOST               "192.168.0.25"           // PiEM-It! Webserver
 #define PIEM_PORT               8080                     // Port des Webservers
-#define ZAEHLER_ID              "123456789"              // eindeutige ID des Z‰hlersensors
+#define ZAEHLER_ID              "123456789"              // eindeutige ID des Zählersensors
 #define TOKEN                   "000000453c67f0"         // Verbindungstoken (Seriennummer des RPi)
 #define PST +1           // MESZ
 #define SERDEBUG 1       // Debug-Infos ¸ber Serielle Schnittstelle senden, bei 0 Debugging OFF  
@@ -144,6 +144,9 @@ bool startWiFi(void)
    Serial.print(" using password ");
    Serial.println(WLAN_PASSPHRASE);
 #endif
+
+   WiFi.persistent(false); // Reduces flash access, memory wearing
+   WiFi.mode(WIFI_STA);    // Explicitly set the ESP8266 to be a WiFi-client
 
    if (WiFi.begin(WLAN_SSID, WLAN_PASSPHRASE) != WL_CONNECTED) {
       for (i=0;i<10;i++){
